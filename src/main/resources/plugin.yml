@@ -1,0 +1,4 @@
+name: idempotent
+version: '0.1'
+main: com.bugalin.idempotent.Idempotent
+api-version: '1.21'
