@@ -1,4 +1,7 @@
 name: idempotent
 version: '0.1'
 main: com.bugalin.idempotent.Idempotent
-api-version: '1.21'
+description: A Minecraft Plugin
+api-version: '1.21.11'
+author: Bugalin
+
