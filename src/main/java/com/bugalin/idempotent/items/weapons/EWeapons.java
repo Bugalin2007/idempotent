@@ -17,9 +17,9 @@ public enum EWeapons {
     BOBS_MYTHIC_SWORD(Material.GOLDEN_SWORD,"Bob's Mythic Sword",new String[]{"A sword said to be forged by Bob himself","Tainted with corrupted tissues","It is now emitting ominous lights"},50,Rarity.LEGENDARY),
     ;
 
-    private final JavaPlugin plugin = JavaPlugin.getPlugin(JavaPlugin.class);
-    private final NamespacedKey damageKey = new NamespacedKey(plugin, "damage");
-    private final NamespacedKey rarityKey = new NamespacedKey(plugin, "rarity");
+    private static final String plugin = "idempotent";
+    private static final NamespacedKey damageKey = new NamespacedKey(plugin, "damage");
+    private static final NamespacedKey rarityKey = new NamespacedKey(plugin, "rarity");
 
     private EWeapons(Material base, String name, String[] lore, int damage, Rarity rarity) {
         this.base = base;
@@ -43,13 +43,13 @@ public enum EWeapons {
     public ItemStack getItemStack() {
         ItemLore.Builder loreObj = ItemLore.lore();
         for (String loreLine : lore) {
-            loreObj.addLine(MiniMessage.miniMessage().deserialize(loreLine));
+            loreObj.addLine(MiniMessage.miniMessage().deserialize("<!italic><gray>"+loreLine));
         }
         loreObj.addLine(Component.empty());
-        loreObj.addLine(MiniMessage.miniMessage().deserialize(rarity.name().toLowerCase()+" item"));
+        loreObj.addLine(MiniMessage.miniMessage().deserialize("<!italic>"+rarity.colorLabel+rarity.name().toLowerCase()+" item"));
 
         ItemStack itemStack = ItemStack.of(base);
-        itemStack.setData(DataComponentTypes.CUSTOM_NAME, MiniMessage.miniMessage().deserialize(rarity.colorLabel+name));
+        itemStack.setData(DataComponentTypes.CUSTOM_NAME, MiniMessage.miniMessage().deserialize("<!italic>"+rarity.colorLabel+name));
         itemStack.setData(DataComponentTypes.LORE, loreObj.build());
         itemStack.editPersistentDataContainer(pdc ->{
             pdc.set(damageKey, PersistentDataType.INTEGER, damage);
@@ -62,9 +62,9 @@ public enum EWeapons {
     private enum Rarity {
         COMMON("<white>"),
         UNCOMMON("<yellow>"),
-        RARE("<magenta>"),
-        LEGENDARY("<light_blue>"),
-        MYTHIC("<purple>");
+        RARE("<light_purple>"),
+        LEGENDARY("<aqua>"),
+        MYTHIC("<dark_purple>");
 
         Rarity(String colorLabel) {
             this.colorLabel = colorLabel;

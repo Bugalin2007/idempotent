@@ -1,0 +1,8 @@
+name: idempotent
+version: '0.1'
+main: com.bugalin.idempotent.Idempotent
+bootstrapper: com.bugalin.idempotent.IdempotentBootstrap
+description: A Minecraft Plugin
+api-version: '1.21.11'
+author: Bugalin
+
