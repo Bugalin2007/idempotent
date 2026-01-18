@@ -1,4 +1,4 @@
-package com.bugalin.idempotent.commands;
+package com.bugalin.idempotent.test.commands;
 
 import com.mojang.brigadier.arguments.ArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;

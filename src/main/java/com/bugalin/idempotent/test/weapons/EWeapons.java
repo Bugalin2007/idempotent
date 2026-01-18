@@ -1,6 +1,5 @@
-package com.bugalin.idempotent.items.weapons;
+package com.bugalin.idempotent.test.weapons;
 
-import io.papermc.paper.datacomponent.DataComponentType;
 import io.papermc.paper.datacomponent.DataComponentTypes;
 import io.papermc.paper.datacomponent.item.ItemLore;
 import net.kyori.adventure.text.Component;
@@ -9,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public enum EWeapons {
     OAK_SWORD(Material.WOODEN_SWORD,"Oak Sword",new String[0],3,Rarity.COMMON),

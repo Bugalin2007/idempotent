@@ -1,14 +1,17 @@
-package com.bugalin.idempotent.commands;
+package com.bugalin.idempotent.test.commands;
 
-import com.bugalin.idempotent.items.weapons.EWeapons;
+import com.bugalin.idempotent.test.goals.GuardGoal;
+import com.bugalin.idempotent.test.weapons.EWeapons;
+import com.destroystokyo.paper.entity.ai.MobGoals;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 
 public class IdempotentCommand{
 
@@ -20,6 +23,8 @@ public class IdempotentCommand{
                 .then(Commands.literal("giveitem")
                         .then(Commands.argument("item",EnumArgument.of(EWeapons.class))
                                 .executes(IdempotentCommand::giveitem)))
+                .then(Commands.literal("spawnguard")
+                        .executes(IdempotentCommand::spawnGuard))
                 .build();
     }
 
@@ -50,5 +55,24 @@ public class IdempotentCommand{
         player.sendPlainMessage("You have been given an item!");
         return Command.SINGLE_SUCCESS;
 
+    }
+
+    private static int spawnGuard(CommandContext<CommandSourceStack> ctx) {
+        CommandSender sender = ctx.getSource().getSender();
+        Entity executor = ctx.getSource().getExecutor();
+        if (!(executor instanceof Player player)) {
+            sender.sendPlainMessage("Can't spawn the guard!");
+            return Command.SINGLE_SUCCESS;
+        }
+        Location location = player.getLocation();
+        player.getWorld().spawn(location, Spider.class, villager -> {
+            villager.setCustomName("Spider Guard");
+            villager.setCustomNameVisible(true);
+
+            MobGoals mobGoals= Bukkit.getMobGoals();
+            mobGoals.removeAllGoals(villager);
+            mobGoals.addGoal(villager,0,new GuardGoal(villager,location));
+        });
+        return Command.SINGLE_SUCCESS;
     }
 }

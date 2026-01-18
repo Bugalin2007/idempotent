@@ -1,6 +1,6 @@
 package com.bugalin.idempotent;
 
-import com.bugalin.idempotent.commands.IdempotentCommand;
+import com.bugalin.idempotent.test.commands.IdempotentCommand;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginProviderContext;
